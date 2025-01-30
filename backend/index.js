@@ -1,10 +1,10 @@
-import app from "./src/app.js";
 import DbConnection from "./src/db.js";
+import { server } from "./src/lib/socket.js";
 
 DbConnection()
 .then(()=>{
-    app.listen(3000,()=>{
-        console.log("App is listen at : http://localhost:3000")
+    server.listen(3000,()=>{
+        console.log("server is listen at : http://localhost:3000")
     })
 })
 .catch(error=>console.log(error))
