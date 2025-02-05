@@ -18,14 +18,16 @@ const getMessage=AsyncWrap(async(req,res)=>{
     const {id:userToChatId}=req.params;
     const myId=req.user?._id;
 
-    const message=await Message.find({
-        $or:[
-            {senderId:myId,receiverId:userToChatId},
-            {receiverId:userToChatId,senderId:myId}
-        ]
-    })
+    console.log(myId)
 
-    return res.status(200).json(new ApiResponse(200,message))
+    const messages = await Message.find({
+        $or: [
+            { senderId: myId, receiverId: userToChatId },
+            { senderId: userToChatId, receiverId: myId }
+        ]
+    }).sort({ createdAt: 1 }); 
+
+    return res.status(200).json(new ApiResponse(200,messages))
 
 })
 
